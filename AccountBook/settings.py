@@ -11,7 +11,9 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
-import my_settings
+import my_settings # my_settings.py에 SECRET_KEY와 DATABASE 적어두고 사용
+
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -29,14 +31,32 @@ ALLOWED_HOSTS = []
 
 
 # Application definition
-REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-    )
-}
+REST_USE_JWT = True # JWT 사용 여부
+JWT_AUTH_COOKIE = 'my-app-auth' # 호출할 Cookie Key값
+JWT_AUTH_REFRESH_COOKIE = 'my-refresh-token' # Refresh Token Cookie Key 값
+
+SITE_ID = 1 # 해당 도메인의 id
+ACCOUNT_UNIQUE_EMAIL = True # User email unique 사용 여부
+ACCOUNT_USER_MODEL_USERNAME_FIELD = None # User username type
+ACCOUNT_USERNAME_REQUIRED = False # User username 필수 여부
+ACCOUNT_EMAIL_REQUIRED = True # User email 필수 여부
+ACCOUNT_AUTHENTICATION_METHOD = 'email' # 로그인 인증 수단
+ACCOUNT_EMAIL_VERIFICATION = 'none' # Email 인증 필수 여부
+
+
 INSTALLED_APPS = [
+    # 새로 추가한 앱
+    'accounts',
+    # 설치한 라이브러리들
     'rest_framework',
-    'rest_framework_simplejwt',
+    'rest_framework.authtoken',
+    'dj_rest_auth',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'dj_rest_auth.registration',
+    # 기존
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -124,3 +144,5 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTH_USER_MODEL = 'accounts.User'
