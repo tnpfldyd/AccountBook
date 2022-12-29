@@ -3,7 +3,7 @@
 
 
 - 회원가입
-  - 요청 주소: http://localhost:8000/api/accounts/v1/registration
+  - url: http://localhost:8000/api/accounts/registration/
   - method: post
   - {
         "email": "",
@@ -14,9 +14,9 @@
 
 
 - 로그인
-  - 요청 주소: http://localhost:8000/api/accounts/v1/login/
-  - method: post
-  - {
+  - url: http://localhost:8000/api/accounts/login/
+  - method: "post"
+  - data: {
         "email": "",
         "password": ""
     }
@@ -24,21 +24,21 @@
 
 
 - 로그아웃
-  - 요청 주소: http://localhost:8000/api/accounts/v1/logout/
-  - method: post
+  - url: http://localhost:8000/api/accounts/logout/
+  - method: "post"
 
 
 
 - 유저정보
-  - 요청 주소: http://localhost:8000/api/accounts/v1/user/
-  - method: get
+  - url: http://localhost:8000/api/accounts/user/
+  - method: "get"
 
 
 
 - 비밀번호 변경
-  - 요청 주소: http://localhost:8000/api/accounts/v1/password/change/
-  - method: post
-  - {
+  - url: http://localhost:8000/api/accounts/password/change/
+  - method: "post"
+  - data: {
         "new_password1": "",
         "new_password2": ""
     }

@@ -43,6 +43,12 @@ ACCOUNT_EMAIL_REQUIRED = True # User email 필수 여부
 ACCOUNT_AUTHENTICATION_METHOD = 'email' # 로그인 인증 수단
 ACCOUNT_EMAIL_VERIFICATION = 'none' # Email 인증 필수 여부
 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.SessionAuthentication',
+        'dj_rest_auth.jwt_auth.JWTCookieAuthentication',
+    ),
+}
 
 INSTALLED_APPS = [
     # 새로 추가한 앱

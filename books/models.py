@@ -3,7 +3,7 @@ from django.db import models
 # Create your models here.
 
 class Book(models.Model):
-    user = models.ForeignKey('accounts.user', on_delete=models.CASCADE) # 작성자
+    user = models.ForeignKey('accounts.user', on_delete=models.CASCADE, blank=True) # 작성자
     category = models.BooleanField() # 수입, 지출 구분
     amount_moved = models.IntegerField() # 금액
     memo = models.CharField(max_length=100) # 내용
