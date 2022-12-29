@@ -55,12 +55,7 @@ class BookCopyAPIView(APIView):
         obj = get_object_or_404(Book, pk=pk)
         self.check_object_permissions(self.request, obj)
         return obj
-
-    def get(self, request, pk, format=None):
-        book = self.get_object(pk)
-        serializer = BookSerializer(book)
-        return Response(serializer.data, status=200)
-    
+    # 상세 or 리스트에서 바로 복제를 누르는 경우만 있으니, get 요청 불필요
     def post(self, request, pk, format=None, **kwargs):
         book = self.get_object(pk)
         book.pk = None

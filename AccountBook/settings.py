@@ -43,6 +43,7 @@ ACCOUNT_EMAIL_REQUIRED = True # User email 필수 여부
 ACCOUNT_AUTHENTICATION_METHOD = 'email' # 로그인 인증 수단
 ACCOUNT_EMAIL_VERIFICATION = 'none' # Email 인증 필수 여부
 
+#jwt인증 default 설정
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.SessionAuthentication',

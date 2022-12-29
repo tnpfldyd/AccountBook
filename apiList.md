@@ -1,4 +1,8 @@
-## api 목록
+# api 목록
+
+
+
+## accounts app
 
 
 
@@ -43,3 +47,58 @@
         "new_password2": ""
     }
 
+## books app
+
+- 가계부 목록
+  - url: http://localhost:8000/api/books/
+  - method: "get"
+
+
+
+- 가계부 생성
+
+  - url: http://localhost:8000/api/books/
+
+  - method: "post"
+
+  - data: {
+        "category": bool, # 수입, 지출 구분 type bool
+        "amount_moved": 금액, # type int
+
+    ​	"memo": "내용",
+
+    }
+
+
+
+- 가계부 상세
+  - url: http://localhost:8000/api/books/pk/
+  - method: "get"
+
+
+
+- 가계부 수정
+
+  - url: http://localhost:8000/api/books/pk/
+
+  - method: "put"
+
+  - data: {
+        "category": bool, # 수입, 지출 구분 type bool
+        "amount_moved": 금액, # type int
+
+    ​	"memo": "내용",
+
+    }
+
+
+
+- 가계부 삭제
+  - url: http://localhost:8000/api/books/pk/
+  - method: "delete"
+
+
+
+- 가계부 복제
+  - url: http://localhost:8000/api/books/pk/copy/
+  - method: "post"
