@@ -3,8 +3,11 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from .permissions import IsOwner
-from .models import Book
+from .models import Book, urlShortener
 from .serializers import BookSerializer
+from rest_framework.decorators import api_view
+from threading import Timer
+import random
 
 class BookListAPIView(APIView):
     permission_classes = [IsAuthenticated]
@@ -56,11 +59,37 @@ class BookCopyAPIView(APIView):
         self.check_object_permissions(self.request, obj)
         return obj
     # 상세 or 리스트에서 바로 복제를 누르는 경우만 있으니, get 요청 불필요
-    def post(self, request, pk, format=None, **kwargs):
+    def post(self, request, pk, format=None):
         book = self.get_object(pk)
-        book.pk = None
-        serializer = BookSerializer(book, data=book.__dict__)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=201)
-        return Response(serializer.errors, status=400)
+        Book.objects.create(category=book.category, amount_moved=book.amount_moved, memo=book.memo, user=book.user)
+        return Response(status=201)
+
+def timer_delete(pk):
+    data = urlShortener.objects.get(pk=pk)
+    data.delete()
+
+@api_view(['POST'])
+def makeurl(request, pk):
+    obj = get_object_or_404(Book, pk=pk)
+    s = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!*^$-_"
+    shorturl = ("".join(random.sample(s, 6)))
+    while urlShortener.objects.filter(shorturl=shorturl):
+        shorturl = ("".join(random.sample(s, 6)))
+    temp = urlShortener.objects.create(
+        origin=obj,
+        shorturl=shorturl
+    )
+    shorturl = "http://localhost:8000/api/books/" + shorturl + "/"
+    S = Timer(28800, timer_delete,[temp.pk]).start() # 8시간 뒤 실행
+    return Response({"shorturl": shorturl}, status=201)
+
+@api_view(['GET'])
+def redirectUrl(request, shorturl):
+    try:
+        obj = urlShortener.objects.get(shorturl=shorturl)
+    except urlShortener.DoesNotExist:
+        obj = None
+    if obj:
+        serializer = BookSerializer(obj.origin)
+        return Response(serializer.data, status=200)
+    return Response({'삭제된 데이터 입니다.'}, status=400)

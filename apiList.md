@@ -102,3 +102,11 @@
 - 가계부 복제
   - url: http://localhost:8000/api/books/pk/copy/
   - method: "post"
+
+- 가계부 공유
+  - url: http://localhost:8000/api/books/pk/share/
+  - method: "post"
+
+- 단축 url
+  - url: http://localhost:8000/api/books/단축url/ #8시간 뒤 삭제
+  - method: "get"
