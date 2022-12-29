@@ -46,7 +46,8 @@ ACCOUNT_EMAIL_VERIFICATION = 'none' # Email 인증 필수 여부
 
 INSTALLED_APPS = [
     # 새로 추가한 앱
-    'accounts',
+    'accounts', # 회원 관리
+    'books', # 가계부
     # 설치한 라이브러리들
     'rest_framework',
     'rest_framework.authtoken',
